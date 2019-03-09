@@ -1,12 +1,11 @@
 package com.niu.kafka.consumer;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Properties;
 
 /**
@@ -24,6 +23,14 @@ public class MessageConsumer {
         kafkaConsumer = new KafkaConsumer<String, String>(properties);
         //2.并订阅主题。
         kafkaConsumer.subscribe(Arrays.asList(TOPIC));
+
+//        kafkaConsumer.subscribe(Arrays.asList(TOPIC), new ConsumerRebalanceListener() {
+//            public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+//                再均衡之前和消费者停止读取消息之后调用
+//                kafkaConsumer.commitSync(currentOffsets);
+//            }
+//        });
+
     }
 
     private static Properties initConfig() {
